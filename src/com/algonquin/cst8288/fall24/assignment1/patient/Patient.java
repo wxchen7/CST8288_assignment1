@@ -1,11 +1,13 @@
 package com.algonquin.cst8288.fall24.assignment1.patient;
 
 import com.algonquin.cst8288.fall24.assignment1.prescription.Prescription;
+import com.alognquin.cst8288.fall24.assignment1.Constants;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
 /**
- *
  * Patient class that holds all patient data.
- *
  */
 public abstract class Patient {
 
@@ -25,35 +27,35 @@ public abstract class Patient {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.dateOfBirth = dateOfBirth;
-
+        updateAgeAndLifeStage();
     }
 
     public String getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
@@ -66,30 +68,44 @@ public abstract class Patient {
 
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+        updateAgeAndLifeStage();
     }
 
     public long getAge() {
         return age;
     }
 
-    public void setAge(long age) {
-        this.age = age;
-    }
-
     public String getLifeStage() {
         return lifeStage;
     }
 
-    public void setLifeStage(String lifeStage) {
-        this.lifeStage = lifeStage;
+    private void updateAgeAndLifeStage() {
+        this.age = calculatePatientAge();
+        this.lifeStage = determineLifeStage(this.age);
     }
 
-    public Prescription getPrescription() {
-        return prescription;
+    /**
+     * Calculate patient age based on date of birth
+     *
+     * @return The patient's age in years
+     */
+    private long calculatePatientAge() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate birthDate = LocalDate.parse(this.dateOfBirth, formatter);
+        LocalDate currentDate = LocalDate.now();
+        return Period.between(birthDate, currentDate).getYears();
     }
 
-    public void setPrescription(Prescription prescription) {
-        this.prescription = prescription;
+    /**
+     * Determine life stage based on age
+     *
+     * @param age The patient's age in years
+     * @return The patient's life stage (CHILD, YOUTH, or ADULT)
+     */
+    private String determineLifeStage(long age) {
+        return (age <= 6) ? Constants.CHILD
+                : (age <= 18) ? Constants.YOUTH
+                : Constants.ADULT;
     }
 
     public String getPlannedTreatment() {
@@ -98,5 +114,13 @@ public abstract class Patient {
 
     public void setPlannedTreatment(String plannedTreatment) {
         this.plannedTreatment = plannedTreatment;
+    }
+
+    public Prescription getPrescription() {
+        return prescription;
+    }
+
+    public void setPrescription(Prescription prescription) {
+        this.prescription = prescription;
     }
 }
