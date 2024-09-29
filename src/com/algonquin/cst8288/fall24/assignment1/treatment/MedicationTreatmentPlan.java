@@ -10,7 +10,7 @@ public class MedicationTreatmentPlan implements TreatmentPlan {
 
         int dosesPerDay = getDosesPerDay(patient.getLifeStage());
         String condition = patient.getPlannedTreatment();
-        int durationDays = getDurationDays(condition);
+        int durationDays = (int) getDurationDays(condition);
         String medicationType = getMedicationType(condition);
 
         String plan = "Medication Treatment Plan for " + patient.getName() + ":\n"
