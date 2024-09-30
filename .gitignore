@@ -1,8 +1,49 @@
-/build/
+# Compiled class files
+*.class
+
+# IDE files
+.idea/
+*.iml
+
+# Build output
+out/
+build/
+/dist/
+
+# Specific XML files
+misc.xml
+modules.xml
+vcs.xml
+CST8288_assignment1.xml
+
+# Log files
+*.log
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# Maven
+target/
+
+# Gradle
+.gradle/
+
+# Exports
 /exports/
+
+# OS generated files
 .DS_Store
 ._*
 .Spotlight-V100
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# NetBeans specific
+nbproject/private/
+nbbuild/
+nbdist/
+nbactions.xml
+nb-configuration.xml
